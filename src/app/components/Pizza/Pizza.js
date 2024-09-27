@@ -17,17 +17,24 @@ export default function Pizza() {
     const handleIncreaseQuantity = (index) => {
         setCart(prevCart => {
             const newCart = increaseQuantity(prevCart, index);
+            const newTotalAmount = newCart.reduce((total, item) => {
+                return total + item.price * item.quantity;
+            }, 0);
+
+            setTotalAmount(newTotalAmount);
             return newCart;
         });
-        setTotalAmount(prevTotal => prevTotal + parseFloat(products[index].price));
     };
 
     const handleDecreaseQuantity = (index) => {
         setCart(prevCart => {
             const newCart = decreaseQuantity(prevCart, index);
+            const newTotalAmount = newCart.reduce((total, item) => {
+                return total + item.price * item.quantity;
+            }, 0);
+            setTotalAmount(newTotalAmount);
             return newCart;
         });
-        setTotalAmount(prevTotal => prevTotal - parseFloat(products[index].price));
     };
 
     return (
@@ -40,35 +47,10 @@ export default function Pizza() {
                         return (
                             <div className="item" key={index}>
                                 <div className="container-img">
-                                    {/* Next.js Image component */}
-                                    <Image
-                                        className="img-desktop"
-                                        src={product.img.desktop}
-                                        alt={product.title}
-                                        width={500}
-                                        height={300}
-                                    />
-                                    <Image
-                                        className="img-tablet"
-                                        src={product.img.tablet}
-                                        alt={product.title}
-                                        width={400}
-                                        height={250}
-                                    />
-                                    <Image
-                                        className="img-mobile"
-                                        src={product.img.mobile}
-                                        alt={product.title}
-                                        width={300}
-                                        height={200}
-                                    />
-                                    <Image
-                                        className="img-thumbnail"
-                                        src={product.img.thumbnail}
-                                        alt={product.title}
-                                        width={100}
-                                        height={100}
-                                    />
+                                    <Image className="img-desktop" src={product.img.desktop} alt={product.title} width={500} height={300}/>
+                                    <Image className="img-tablet" src={product.img.tablet} alt={product.title} width={400} height={250}/>
+                                    <Image className="img-mobile" src={product.img.mobile} alt={product.title} width={300} height={200}/>
+                                    <Image className="img-thumbnail" src={product.img.thumbnail} alt={product.title} width={100} height={100}/>
                                 </div>
                                 {quantity === 0 ? (
                                     <button className="add-cart" onClick={() => handleAddToCart(index)}>
